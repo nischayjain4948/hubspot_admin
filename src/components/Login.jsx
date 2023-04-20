@@ -7,18 +7,10 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { CheckBox } from '@mui/icons-material';
 import { useNavigate, Link } from 'react-router-dom';
-// import hcbgImage from "../images/login-register.jpg";
+
 
 
 const Login = () => {
-
-    // const myStyle = {
-    //     backgroundImage:
-    //         `url(${hcbgImage})`,
-    //     height: '100vh',
-    //     backgroundSize: 'cover',
-    //     backgroundRepeat: 'no-repeat',
-    // };
 
 
 
@@ -32,7 +24,9 @@ const Login = () => {
 
     const handleSubmit = async () => {
         if (!email || !password) {
+            setAdminNotFound("");
             setEmptyFieldError("Please fill all correct fields");
+
             return
         }
         try {
@@ -47,11 +41,13 @@ const Login = () => {
 
             });
             if (loginResponse.status === 404) {
+                setEmptyFieldError("");
                 setAdminNotFound("Invalid email & password")
                 return
 
             }
             setAdminNotFound("");
+            setEmptyFieldError("");
             setLoginSuccess("login success")
             localStorage.setItem("ADMIN", `${Math.random().toString(36).substring(2, 7)}-${email}`);
             setTimeout(() => {
