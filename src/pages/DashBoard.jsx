@@ -12,6 +12,9 @@ import { green } from '@mui/material/colors';
 import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -22,7 +25,12 @@ export default function DashBoard() {
     const [code, setCode] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [updateTokenAlert, showUpdateTokenAlert] = React.useState(false);
+    const [errorInUpdateToken, showErrorInUpdateToken] = React.useState(false);
     const timer = React.useRef();
+
+    const navigate = useNavigate();
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -77,7 +85,27 @@ export default function DashBoard() {
         if (refreshTokenResponse.status === 200) {
             setLoading(false);
             setSuccess(true);
+            showErrorInUpdateToken(false);
+            showUpdateTokenAlert(true);
+            setTimeout(() => {
+                navigate("/home")
+            }, 1000)
+
         }
+        else {
+            setLoading(false);
+            showUpdateTokenAlert(false);
+            showErrorInUpdateToken(true);
+            setTimeout(() => {
+                navigate("/dashboard");
+                window.location.replace("http://localhost:3000/dashboard");
+            }, 1000)
+
+
+
+
+        }
+
 
     }
 
@@ -108,8 +136,25 @@ export default function DashBoard() {
                     <Button color="inherit">Logout</Button>
                 </Toolbar>
             </AppBar>
+
+
+
+            <Stack sx={{ width: '100%' }}    >
+                {updateTokenAlert ?
+                    <Alert severity="success">Token Updated successfully!</Alert> : ""}
+                {errorInUpdateToken ?
+                    <Alert severity="error">Unable to update the token, Please choose your Hubspot  account again.</Alert> : ""}
+            </Stack>
+
+
+
+
+
             <div style={{ textAlign: "center", marginTop: "20px" }}>
+
+
                 {showConnectButton ? <Button onClick={handleOpen}>Connect Your Hubspot Account</Button> : ""}
+
 
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -119,6 +164,15 @@ export default function DashBoard() {
                     <CircularProgress color="inherit" />
                 </Backdrop>
                 <br />
+
+
+
+
+
+
+
+
+
 
 
 
@@ -176,8 +230,11 @@ export default function DashBoard() {
                         />
                     )}
                 </Box>
-
             </div>
+
+
+
+
         </Box>
 
     );
