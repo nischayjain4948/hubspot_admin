@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Footer = () => {
+
   return (
     <div className='footer' >
-
-      <h3>Admin DashBoard</h3><span>Developed By @nischayjain</span>
-
+    <span>Developed By - Nischay jain</span>
     </div>
   )
 }
