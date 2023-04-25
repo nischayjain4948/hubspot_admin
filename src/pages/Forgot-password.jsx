@@ -5,7 +5,7 @@ import LockResetIcon from '@mui/icons-material/LockReset';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import AlertTitle from '@mui/material/AlertTitle';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const ForgotPassword = () => {
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
         setEmptyEmailError("");
         setAdminNotFound("")
         setEmailSent("Please check your email to reset your password");
-        
+
 
 
 
@@ -60,9 +60,11 @@ const ForgotPassword = () => {
 
                     <Grid align="center">
                         <Avatar style={avatarStyle}><LockResetIcon /></Avatar>
-                        <h2>Enter your email to reset your password</h2>
+                        <h3>Please enter your valid email</h3>
                     </Grid>
 
+                    <br />
+                    <br />
                     <TextField label="email" placeholder='Enter your Mail ' type='email' value={email} onChange={(e) => setEmail(e.target.value)} fullWidth required />
 
                     <br />
@@ -97,6 +99,8 @@ const ForgotPassword = () => {
 
 
 
+                    <br />
+                    <br />
                     <br />
 
                     <Typography>

@@ -12,6 +12,7 @@ import hcbgImage from "./images/login-register.jpg";
 import Home from './pages/Home';
 import Settings from './pages/Settings';
 import About from './pages/About';
+import ResetPassword from './pages/ResetPassword';
 
 
 
@@ -53,6 +54,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/about' element={<About />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
 
 
 
