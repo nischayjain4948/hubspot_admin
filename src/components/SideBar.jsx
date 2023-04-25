@@ -18,6 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Button from '@mui/material/Button';
+
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -87,7 +89,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function SideBar() {
+export default function SideBar(props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -98,6 +100,13 @@ export default function SideBar() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const logoutAdmin = () =>{
+        console.log("Button clicked...");
+        props.logout()
+    
+    }
+
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -116,9 +125,10 @@ export default function SideBar() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
+                    <Typography variant="h6" noWrap component="div" sx={{flexGrow:1}}>
                         Nischay's DashBoard
                     </Typography>
+                     <Button color="inherit" onClick={logoutAdmin}>Logout</Button>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

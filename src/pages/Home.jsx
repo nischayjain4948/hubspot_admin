@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
 
 
-const Home = () => {
+const Home = (props) => {
     return (
-        <SideBar />
+        <SideBar  logout = {props}/>
 
     )
 }

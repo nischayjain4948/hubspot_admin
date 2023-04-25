@@ -18,7 +18,8 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-export default function DashBoard() {
+export default function DashBoard(props) {
+    console.log(props,"dsfdf")
     const [open, setOpen] = React.useState(false);
     const [showUpdateButton, setShowUpdateButton] = React.useState(false);
     const [showConnectButton, setShowConnectButton] = React.useState(true);
@@ -57,6 +58,11 @@ export default function DashBoard() {
         const { redirected_uri } = await uri.json();
         window.location.replace(redirected_uri);
     };
+
+    const handleAdminLogout = () =>{
+        // console.log("Button Clicked");
+          props.logout();
+    }
 
     React.useEffect(() => {
         const url = window.location.href;
@@ -133,7 +139,7 @@ export default function DashBoard() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Nischay's DashBoard
                     </Typography>
-                    <Button color="inherit">Logout</Button>
+                    <Button color="inherit" onClick={handleAdminLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>
 

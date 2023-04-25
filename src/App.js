@@ -22,6 +22,12 @@ import ResetPassword from './pages/ResetPassword';
 
 function App() {
 
+
+  const logoutAdmin = () =>{
+    localStorage.clear();
+  }
+
+
   const myStyle = {
     backgroundImage:
       `url(${hcbgImage})`,
@@ -50,19 +56,11 @@ function App() {
 
           <Route path='/' element={<Login />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/dashboard' element={<DashBoard />} />
-          <Route path='/home' element={<Home />} />
+          <Route path='/dashboard' element={<DashBoard logout = {logoutAdmin} />} />
+          <Route path='/home' element={<Home  logout = {logoutAdmin} /> } />
           <Route path='/settings' element={<Settings />} />
           <Route path='/about' element={<About />} />
           <Route path='/reset-password' element={<ResetPassword />} />
-
-
-
-
-
-
-
-
         </Routes>
 
 
