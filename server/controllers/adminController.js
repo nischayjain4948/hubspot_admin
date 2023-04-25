@@ -5,7 +5,8 @@ const CLIENT_SECRET = "f0dbcc2e-4b00-43aa-9191-072dd51687cc"
 const REDIRECT_URI = "http://localhost:3000/dashboard";
 const url = require("url");
 const axios = require("axios");
-
+const randomString = require("randomstring");
+const { sentForgotPasswordLink } = require("./admin.helpers");
 
 
 
@@ -32,6 +33,9 @@ exports.ForgotPassword = async (req, res) => {
     if (!adminResponse) {
         return res.status(404).json({ message: "You are not authorized person." });
     }
+    const randomstring = randomString.generate();
+    await Token.updateOne({ email }, { $set: { randomstring } });
+    await sentForgotPasswordLink(adminResponse.adminFullName, email, randomstring);
     return res.status(200).json({ message: "Authenticate successfully." })
 }
 
