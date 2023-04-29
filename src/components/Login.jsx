@@ -48,8 +48,10 @@ const Login = () => {
             }
             setAdminNotFound("");
             setEmptyFieldError("");
-            setLoginSuccess("login success")
+            setLoginSuccess("login success");
+            const {jwtToken} = await loginResponse.json();
             localStorage.setItem("ADMIN", `${Math.random().toString(36).substring(2, 7)}-${email}`);
+            localStorage.setItem("TOKEN", jwtToken);
             setTimeout(() => {
                 navigate("/dashboard");
 

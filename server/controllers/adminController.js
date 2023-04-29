@@ -6,16 +6,16 @@ const REDIRECT_URI = "http://localhost:3000/dashboard";
 const url = require("url");
 const axios = require("axios");
 const randomString = require("randomstring");
-const { sentForgotPasswordLink } = require("./admin.helpers");
+const { sentForgotPasswordLink, getJWTAccessToken } = require("./admin.helpers");
 
 
 
 // get access token
-const getAccessToken = async () => {
-    const tokenResponse = await token.findOne({ email: "nischay.jain@dotsquares.com" })
-    const aToken = tokenResponse.access_token;
-    return aToken;
-}
+// const getAccessToken = async () => {
+//     const tokenResponse = await token.findOne({ email: "nischay.jain@dotsquares.com" })
+//     const aToken = tokenResponse.access_token;
+//     return aToken;
+// }
 
 exports.AdminLogin = async (req, res, next) => {
     const { email, password } = req.body;
@@ -23,7 +23,10 @@ exports.AdminLogin = async (req, res, next) => {
     if (!adminResponse) {
         return res.status(404).json({ message: "You are not authorized person." });
     }
-    return res.status(200).json({ message: "Authenticate successfully." })
+
+    const jwtToken = await getJWTAccessToken({email, password});
+    console.log("jwt-token", jwtToken);
+    return res.status(200).json({ message: "Authenticate successfully." , jwtToken});
 
 }
 

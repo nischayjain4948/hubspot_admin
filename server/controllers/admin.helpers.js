@@ -1,6 +1,13 @@
 
 const nodemailer = require("nodemailer");
 const { mail } = require("../config/mail.config");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "hubspot_jwt";
+const getJWTAccessToken = async (payload) =>{
+      const token = jwt.sign(payload, JWT_SECRET, {expiresIn:3600})
+      return token;
+}
+
 
 const sentForgotPasswordLink = async (name, email, randomString) => {
     try {
@@ -36,7 +43,7 @@ const sentForgotPasswordLink = async (name, email, randomString) => {
     }
 }
 
-module.exports = { sentForgotPasswordLink }
+module.exports = { sentForgotPasswordLink , getJWTAccessToken }
 
 
 
