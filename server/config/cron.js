@@ -1,15 +1,15 @@
 const cron = require('node-cron');
 var request = require("request");
 const Token = require("../models/tokens");
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CLIENT_ID = "b1427cb1-0fd8-416f-8692-29b4aa31bb58";
+const CLIENT_SECRET = "f0dbcc2e-4b00-43aa-9191-072dd51687cc";
 const REDIRECT_URI = `http://localhost:3000/oauth-callback`;
 
 
 exports.refreshTokenCron = async () => {
     try {
         cron.schedule(" */5 * * * * ", async () => {
-            let tokenInfo = await tokens.findOne();
+            let tokenInfo = await Token.findOne();
 
             if (tokenInfo.refresh_token && tokenInfo.refresh_token != null) {
                 const formData = {

@@ -19,8 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Button from '@mui/material/Button';
-
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -90,6 +90,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function SideBar(props) {
+    const navigate = useNavigate();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -101,10 +102,11 @@ export default function SideBar(props) {
         setOpen(false);
     };
 
-    const logoutAdmin = () =>{
+    const logoutAdmin = () => {
         console.log("Button clicked...");
         props.logout()
-    
+        navigate("/");
+
     }
 
 
@@ -125,10 +127,10 @@ export default function SideBar(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div" sx={{flexGrow:1}}>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         Nischay's DashBoard
                     </Typography>
-                     <Button color="inherit" onClick={logoutAdmin}>Logout</Button>
+                    <Button color="inherit" onClick={logoutAdmin}>Logout</Button>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -139,39 +141,39 @@ export default function SideBar(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["dashboard", "viewcontacts"].map((text, index) => (
-                        
-                        <ListItem key={text}    disablePadding sx={{ display: 'block' }}>                        
-                          <Link to={`/${text}`}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                               
-                                
-                                <ListItemIcon
+                    {["dashboard", "viewcontacts", "card"].map((text, index) => (
+
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                            <Link to={`/${text}`}>
+                                <ListItemButton
                                     sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
                                     }}
                                 >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                             </Link>
+
+
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                    </ListItemIcon>
+                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                </ListItemButton>
+                            </Link>
                         </ListItem>
                     ))}
                 </List>
                 <Divider />
                 <List>
                     {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text}  disablePadding sx={{ display: 'block' }}>
-                          
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,

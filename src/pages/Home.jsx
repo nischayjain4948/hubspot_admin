@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import SideBar from '../components/SideBar'
 
 
 const Home = (props) => {
     return (
-        <SideBar  logout = {props}/>
+        <SideBar logout={props} />
     )
 }
 

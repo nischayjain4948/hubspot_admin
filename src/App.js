@@ -13,6 +13,8 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import ResetPassword from './pages/ResetPassword';
+import Card from './pages/Card';
+import { useEffect, useState } from 'react';
 
 
 
@@ -21,9 +23,7 @@ import ResetPassword from './pages/ResetPassword';
 
 
 function App() {
-
-
-  const logoutAdmin = () =>{
+  const logoutAdmin = () => {
     localStorage.clear();
   }
 
@@ -45,23 +45,20 @@ function App() {
       <BrowserRouter>
 
 
+
+
+
         <Routes>
-
-          {/* <Route path='/' element={<h1>Product Listening Component</h1>} />
-          <Route path='/addproduct' element={<h1>Add Product Component</h1>} />
-          <Route path='/updateproduct' element={<h1>Update Product Component</h1>} />
-          <Route path='/logout' element={<h1>logout Component</h1>} />
-          <Route path='/profile' element={<h1>Profile Component</h1>} /> */}
-
-
-          <Route path='/' element={<Login />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/dashboard' element={<DashBoard logout = {logoutAdmin} />} />
-          <Route path='/home' element={<Home  logout = {logoutAdmin} /> } />
+          <Route path='/dashboard' element={<DashBoard logout={logoutAdmin} />} />
+          <Route path='/home' element={<Home logout={logoutAdmin} />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/about' element={<About />} />
           <Route path='/reset-password' element={<ResetPassword />} />
+          <Route path='/card' element={<Card />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Routes>
+
 
 
       </BrowserRouter>

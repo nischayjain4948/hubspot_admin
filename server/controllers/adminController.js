@@ -24,9 +24,9 @@ exports.AdminLogin = async (req, res, next) => {
         return res.status(404).json({ message: "You are not authorized person." });
     }
 
-    const jwtToken = await getJWTAccessToken({email, password});
+    const jwtToken = await getJWTAccessToken({ email, password });
     console.log("jwt-token", jwtToken);
-    return res.status(200).json({ message: "Authenticate successfully." , jwtToken});
+    return res.status(200).json({ message: "Authenticate successfully.", jwtToken });
 
 }
 
@@ -80,5 +80,34 @@ exports.OAuth = async (req, res) => {
         console.log(err.response.data);
         return res.status(500).json({ message: "OOPS! unable to update the token" })
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Get All Cards
+
+exports.GetAllCards = async (req, res) => {
+    try {
+        const { code } = req.params;
+        const appId = 1512769;
+        const cardsResponse = await axios.get(`https://api.hubapi.com/crm/v3/extensions/cards/:${appId}`, { 'headers': { 'Authorization': `Bearer ${code}` } });
+        console.log("Cards Response", cardsResponse);
+    }
+    catch (error) {
+        console.log("Error in cards api: ", error);
+    }
+
+
+
 }
 

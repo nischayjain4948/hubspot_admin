@@ -25,4 +25,7 @@ router.get("/auth", (req, res) => {
 router.post("/Oauth_callback", AdminController.OAuth);
 
 
+router.get("/getAllCards/:code", AdminController.GetAllCards);
+
+
 module.exports = router;

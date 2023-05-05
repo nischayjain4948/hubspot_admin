@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function DashBoard(props) {
-    console.log(props,"dsfdf")
+    console.log(props, "dsfdf")
     const [open, setOpen] = React.useState(false);
     const [showUpdateButton, setShowUpdateButton] = React.useState(false);
     const [showConnectButton, setShowConnectButton] = React.useState(true);
@@ -59,15 +59,16 @@ export default function DashBoard(props) {
         window.location.replace(redirected_uri);
     };
 
-    const handleAdminLogout = () =>{
-        // console.log("Button Clicked");
-          props.logout();
+    const handleAdminLogout = () => {
+        props.logout();
+        navigate("/");
     }
 
     React.useEffect(() => {
         const url = window.location.href;
         const code = url.split("=")[1];
         if (code) {
+            localStorage.setItem("Oauth", code);
             setCode(code);
             setShowUpdateButton(true);
             setShowConnectButton(false);
@@ -77,7 +78,7 @@ export default function DashBoard(props) {
             clearTimeout(timer.current);
         };
 
-    })
+    }, [code]);
     const updateToken = async () => {
         setLoading(true);
         const refreshTokenResponse = await fetch("http://localhost:8080/api/Oauth_callback", {
