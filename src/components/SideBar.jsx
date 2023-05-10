@@ -103,10 +103,8 @@ export default function SideBar(props) {
     };
 
     const logoutAdmin = () => {
-        console.log("Button clicked...");
-        props.logout()
+        props.logout.logout();
         navigate("/");
-
     }
 
 

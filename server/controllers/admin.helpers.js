@@ -3,9 +3,24 @@ const nodemailer = require("nodemailer");
 const { mail } = require("../config/mail.config");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hubspot_jwt";
-const getJWTAccessToken = async (payload) =>{
-      const token = jwt.sign(payload, JWT_SECRET, {expiresIn:3600})
-      return token;
+const getJWTAccessToken = async (payload) => {
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 })
+    return token;
+}
+
+
+
+const verifyJWTToken = async (token) => {
+
+    const response = jwt.verify(token, JWT_SECRET, (error, decode) => {
+        if (error) {
+            return
+        }
+        return decode;
+    })
+
+
+
 }
 
 
@@ -43,7 +58,7 @@ const sentForgotPasswordLink = async (name, email, randomString) => {
     }
 }
 
-module.exports = { sentForgotPasswordLink , getJWTAccessToken }
+module.exports = { sentForgotPasswordLink, getJWTAccessToken, verifyJWTToken }
 
 
 

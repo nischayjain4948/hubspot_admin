@@ -23,15 +23,34 @@ import { useEffect, useState } from 'react';
 
 
 
+
+
 function App() {
 
-
   const [jwt, setJwt] = useState("");
-
-  useEffect(() => {
+  const [admin, setAdmin] = useState("");
+  const [oAuth, setOAuth] = useState("");
+  useEffect(async () => {
     setJwt(localStorage.getItem("TOKEN"));
+    setAdmin(localStorage.getItem("ADMIN"));
+    setOAuth(localStorage.getItem("Oauth"));
 
-  })
+    const loginResponse = await fetch("http://localhost:8080/api/verifyJWT", {
+      method: "POST",
+      body: JSON.stringify({ jwt }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+    });
+
+
+
+  }, [jwt, admin, oAuth]);
+
+
+
+
 
   const logoutAdmin = () => {
     localStorage.clear();

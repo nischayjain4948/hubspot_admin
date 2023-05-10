@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function DashBoard(props) {
-    console.log(props, "dsfdf")
     const [open, setOpen] = React.useState(false);
     const [showUpdateButton, setShowUpdateButton] = React.useState(false);
     const [showConnectButton, setShowConnectButton] = React.useState(true);

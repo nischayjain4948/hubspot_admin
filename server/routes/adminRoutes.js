@@ -25,6 +25,10 @@ router.get("/auth", (req, res) => {
 router.post("/Oauth_callback", AdminController.OAuth);
 
 
+
+router.post("/verifyJWT", AdminController.VerifyJWT)
+
+
 router.get("/getAllCards/:code", AdminController.GetAllCards);
 
 

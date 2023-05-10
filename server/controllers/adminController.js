@@ -6,7 +6,7 @@ const REDIRECT_URI = "http://localhost:3000/dashboard";
 const url = require("url");
 const axios = require("axios");
 const randomString = require("randomstring");
-const { sentForgotPasswordLink, getJWTAccessToken } = require("./admin.helpers");
+const { sentForgotPasswordLink, getJWTAccessToken, verifyJWTToken } = require("./admin.helpers");
 
 
 
@@ -25,7 +25,8 @@ exports.AdminLogin = async (req, res, next) => {
     }
 
     const jwtToken = await getJWTAccessToken({ email, password });
-    console.log("jwt-token", jwtToken);
+    const credentiles = { email, password };
+    req.credentiles;
     return res.status(200).json({ message: "Authenticate successfully.", jwtToken });
 
 }
@@ -106,6 +107,25 @@ exports.GetAllCards = async (req, res) => {
     catch (error) {
         console.log("Error in cards api: ", error);
     }
+
+
+
+}
+
+
+exports.VerifyJWT = async (req, res) => {
+    const { token } = req.body
+
+    const adminResponse = await verifyJWTToken(token)
+    if (!adminResponse) {
+        res.status(505).json({ message: "unauthorized" });
+    }
+    else {
+        res.status(200).json({ message: "token is valid" });
+    }
+
+
+
 
 
 
