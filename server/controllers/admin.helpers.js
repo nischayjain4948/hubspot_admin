@@ -3,25 +3,35 @@ const nodemailer = require("nodemailer");
 const { mail } = require("../config/mail.config");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hubspot_jwt";
+const Token = require("../models/tokens");
 const getJWTAccessToken = async (payload) => {
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 })
     return token;
 }
 
 
-
-const verifyJWTToken = async (token) => {
-
-    const response = jwt.verify(token, JWT_SECRET, (error, decode) => {
-        if (error) {
-            return
-        }
-        return decode;
-    })
-
-
-
+// get access token
+const getAccessToken = async () => {
+    const tokenResponse = await token.findOne({ email: "nischay.jain@dotsquares.com" })
+    const aToken = tokenResponse.access_token;
+    return aToken;
 }
+
+
+
+// get Admin
+
+const getAdmin = async (adminEmail) => {
+    const newemail = adminEmail.split("-")[1];
+    const { email, password } = await Token.findOne({ email: newemail });
+    return { email, password };
+}
+
+
+
+
+
+
 
 
 const sentForgotPasswordLink = async (name, email, randomString) => {
@@ -58,7 +68,7 @@ const sentForgotPasswordLink = async (name, email, randomString) => {
     }
 }
 
-module.exports = { sentForgotPasswordLink, getJWTAccessToken, verifyJWTToken }
+module.exports = { sentForgotPasswordLink, getJWTAccessToken, getAdmin }
 
 
 

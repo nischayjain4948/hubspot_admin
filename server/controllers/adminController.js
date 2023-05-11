@@ -6,16 +6,12 @@ const REDIRECT_URI = "http://localhost:3000/dashboard";
 const url = require("url");
 const axios = require("axios");
 const randomString = require("randomstring");
-const { sentForgotPasswordLink, getJWTAccessToken, verifyJWTToken } = require("./admin.helpers");
+const { sentForgotPasswordLink, getJWTAccessToken, getAdmin } = require("./admin.helpers");
+const JWT = require("jsonwebtoken");
+const JWT_SECRET = "hubspot_jwt";
 
 
 
-// get access token
-// const getAccessToken = async () => {
-//     const tokenResponse = await token.findOne({ email: "nischay.jain@dotsquares.com" })
-//     const aToken = tokenResponse.access_token;
-//     return aToken;
-// }
 
 exports.AdminLogin = async (req, res, next) => {
     const { email, password } = req.body;
@@ -26,8 +22,9 @@ exports.AdminLogin = async (req, res, next) => {
 
     const jwtToken = await getJWTAccessToken({ email, password });
     const credentiles = { email, password };
-    req.credentiles;
-    return res.status(200).json({ message: "Authenticate successfully.", jwtToken });
+    req.headers.Admin = credentiles;
+    res.status(200).json({ message: "Authenticate successfully.", jwtToken });
+
 
 }
 
@@ -114,20 +111,23 @@ exports.GetAllCards = async (req, res) => {
 
 
 exports.VerifyJWT = async (req, res) => {
-    const { token } = req.body
+    try {
+        const { jwt, admin } = req.body
+        const verifyResponse = JWT.verify(jwt, JWT_SECRET, (error, decode) => {
+            if (error) {
+                return res.status(505).json({ message: "Token Expire" })
+            }
+            return decode;
+        })
+        const { iat, exp, ...rest } = verifyResponse;
+        const response = await getAdmin(admin);
+        if (JSON.stringify(rest) === JSON.stringify(response)) {
+            return res.status(200).json({ message: "Token verify successfully!" })
+        }
 
-    const adminResponse = await verifyJWTToken(token)
-    if (!adminResponse) {
-        res.status(505).json({ message: "unauthorized" });
     }
-    else {
-        res.status(200).json({ message: "token is valid" });
+    catch (error) {
+        console.log("something went wrong");
     }
-
-
-
-
-
-
 }
 

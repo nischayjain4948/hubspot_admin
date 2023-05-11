@@ -25,30 +25,41 @@ import { useEffect, useState } from 'react';
 
 
 
+
 function App() {
 
   const [jwt, setJwt] = useState("");
   const [admin, setAdmin] = useState("");
   const [oAuth, setOAuth] = useState("");
-  useEffect(async () => {
-    setJwt(localStorage.getItem("TOKEN"));
-    setAdmin(localStorage.getItem("ADMIN"));
-    setOAuth(localStorage.getItem("Oauth"));
-
-    const loginResponse = await fetch("http://localhost:8080/api/verifyJWT", {
-      method: "POST",
-      body: JSON.stringify({ jwt }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-    });
 
 
 
-  }, [jwt, admin, oAuth]);
+  useEffect(() => {
 
+    const jwt = localStorage.getItem("TOKEN")
+    const admin = localStorage.getItem("ADMIN")
+    const oauth = localStorage.getItem("Oauth")
+    const checkJWTToken = async (jwt, admin) => {
+      const { status } = await fetch("http://localhost:8080/api/verifyJWT", {
+        method: "POST",
+        body: JSON.stringify({ jwt: jwt, admin }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
 
+      });
+      if (status !== 200) {
+        localStorage.clear();
+      }
+
+    }
+
+    checkJWTToken(jwt, admin);
+    setJwt(jwt);
+    setAdmin(admin);
+    setOAuth(oauth);
+
+  });
 
 
 
